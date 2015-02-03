@@ -1,0 +1,18 @@
+---
+external_user_name: <%= @external_user_name %>
+flows:
+<% @flows.sort.each do |k,v| -%>
+  <%= k -%>:
+<% v.sort.each do |k1,v1| -%>
+<% if v1.is_a?(String) -%>
+    <%= k1 %>: <%= v1 %>
+<% end -%>
+<% if v1.is_a?(Array) -%>
+    <%= k1 %>:
+<% v1.sort.each do |v2| -%>
+      - <%= v2 %>
+<% end -%>
+<% end -%>
+<% end -%>
+<% end -%>
+# File managed by Puppet
