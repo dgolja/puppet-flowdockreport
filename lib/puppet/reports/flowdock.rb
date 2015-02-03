@@ -29,7 +29,7 @@ Puppet::Reports.register_report(:flowdock) do
       report_statusues = settings['statuses'] || ['failed']
       mention = settings['mention'] || []
       # add a special flowdock keywoard to alert the user(s)
-      mention.map! {|v| "@#{v}"}
+      mention.map! {|v| v.match(/^@/) ? v : "@#{v}"}
 
       # are we interested in this report ?
       next unless report_statusues.include?(self.status)
