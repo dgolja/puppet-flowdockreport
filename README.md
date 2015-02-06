@@ -27,6 +27,11 @@ class {'flowdockreport':
     'staging' => {
       'api' => 'API_KEY_DEV_FLOW',
       'statuses' => ['changed', 'failed'],
+    },
+    'cms' => {
+      'api' => 'API_KEY_FOR_CHANNEL_CMS',
+      'statuses' => ['changed','failed'],
+      'host' => 'azcms*',
     }
   },
 }
@@ -35,7 +40,6 @@ class {'flowdockreport':
 
 ##TODO
 
-* send notification based on the hostname pattern
 * add emoji for different type or failure
 
 ##License

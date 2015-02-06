@@ -28,7 +28,7 @@ Puppet::Reports.register_report(:flowdock) do
     FLOWS.each do |_,settings|
       report_statusues = settings['statuses'] || ['failed']
       mention = settings['mention'] || []
-      # add a special flowdock keywoard to alert the user(s)
+      # add a special flowdock keyword to alert the user(s)
       mention.map! {|v| v.match(/^@/) ? v : "@#{v}"}
 
       # are we interested in this report ?
@@ -39,12 +39,17 @@ Puppet::Reports.register_report(:flowdock) do
         next unless settings['environment'].include?(self.environment)
       end
 
+      # check if the hostname match the requests
+      if settings['host']
+        next unless self.host =~ Regexp.new(settings['host'])
+      end
+
       content = "Puppet run on #{self.host} #{self.status} #{mention.collect { |p| p.to_s}.join(", ")}"
       # create Flow object
       flow = Flowdock::Flow.new(:api_token => settings['statuses'], :external_user_name => EXTERNAL_USER)
 
       # send message to Chat
-      flow.push_to_chat(:content => content, :tags => [self.host, self.environment])
+      flow.push_to_chat(:content => content, :tags => [self.host, self.environment, self.status])
       Puppet.debug(content)
     end
 
