@@ -22,6 +22,14 @@ Puppet::Reports.register_report(:flowdock) do
 
   FLOWS = config['flows'] || {}
 
+  #define default emojis
+
+  EMOJIS = {
+    'changed' => ':wind_chime:',
+    'failed' => ':fail:',
+    'unchanged' => ':neutral_face:'
+  }
+
   def process
     return if File.exists?(DISABLED_FILE)
     
@@ -44,7 +52,7 @@ Puppet::Reports.register_report(:flowdock) do
         next unless self.host =~ Regexp.new(settings['host'])
       end
 
-      content = "Puppet run on #{self.host} #{self.status} #{mention.collect { |p| p.to_s}.join(", ")}"
+      content = "#{EMOJIS[self.status]} Puppet run on #{self.host} #{self.status} #{mention.collect { |p| p.to_s}.join(", ")}"
       # create Flow object
       flow = Flowdock::Flow.new(:api_token => settings['statuses'], :external_user_name => EXTERNAL_USER)
 
