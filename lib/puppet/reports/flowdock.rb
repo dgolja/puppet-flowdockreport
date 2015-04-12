@@ -54,7 +54,7 @@ Puppet::Reports.register_report(:flowdock) do
 
       content = "#{EMOJIS[self.status]} Puppet run on #{self.host} #{self.status} #{mention.collect { |p| p.to_s}.join(", ")}"
       # create Flow object
-      flow = Flowdock::Flow.new(:api_token => settings['statuses'], :external_user_name => EXTERNAL_USER)
+      flow = Flowdock::Flow.new(:api_token => settings['api'], :external_user_name => EXTERNAL_USER)
 
       # send message to Chat
       flow.push_to_chat(:content => content, :tags => [self.host, self.environment, self.status])
