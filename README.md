@@ -6,7 +6,7 @@ A Puppet report handler for sending notifications of Puppet runs to Flowdock.
 
 ##Installation
 
-`puppet module install golja/influxdb`
+`puppet module install golja/flowdockreport`
 
 ##Usage
 
@@ -36,11 +36,6 @@ class {'flowdockreport':
   },
 }
 ```
-
-
-##TODO
-
-* add emoji for different type or failure
 
 ##License
 
